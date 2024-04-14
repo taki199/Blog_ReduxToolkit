@@ -10,7 +10,7 @@ const { verifyTokenAndAdmin, verifyTokenAndOnlyUser, verifyToken, verifyTokenAnd
 
 //api/users/profile
 
-router.get("/profile",validateObjectId,verifyTokenAndAdmin,getAllUsersCtrl)
+router.get("/profile",verifyTokenAndAdmin,getAllUsersCtrl)
 
 
 //api/users/profile/:id

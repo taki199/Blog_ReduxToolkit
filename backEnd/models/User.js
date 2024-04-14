@@ -51,7 +51,19 @@ const UserSchema = new mongoose.Schema({
 },
 {
     timestamps:true,
+    toJSON:{virtuals: true},  //Gets virtual fields when converting object to JSON
+    toObject:{virtuals: true} //Gets virtual fields when converting back to a Mongoose document
 });
+
+//populate Posts That Belongs to this User when he/she get his/her Profile
+
+UserSchema.virtual("posts",{
+    ref: "Post",
+    foreignField:"user",
+    localField: "_id"
+})
+
+
 
 // Generate Auth Token 
 
