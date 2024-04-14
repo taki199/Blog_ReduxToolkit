@@ -30,7 +30,24 @@ const cloudinaryRemoveImage = async (imagePublicId) => {
     }
 };
 
+//Cloudinary Remove  Multiple Image
+
+const cloudinaryRemoveMultipleImage = async (publicIds) => {
+    try {
+        const result = await cloudinary.api.delete_resources(publicIds);
+        return result;
+
+    } catch (error) {
+        console.log(error)
+        throw new Error('Internal Server Error (cloudinary)');
+    }
+}
+
+
+
+
 module.exports = {
     cloudinaryUploadImage,
-    cloudinaryRemoveImage
+    cloudinaryRemoveImage,
+    cloudinaryRemoveMultipleImage
 };

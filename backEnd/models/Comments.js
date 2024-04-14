@@ -4,7 +4,7 @@ const Joi = require("joi")
 //Comment Schema
 
 const CommentSchema=new mongoose.Schema({
-    PostId:{
+    postId:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Post",
         required:true,
@@ -35,8 +35,8 @@ const Comment=mongoose.model("Comment",CommentSchema);
 //validate Create Comment
 function validateCreateComment(obj){
     const schema=Joi.object({
-        postId:Joi.string().required(),
-        text:Joi.string().required(),
+        postId:Joi.string().required().label( "post Id" ),
+        text:Joi.string().required().label( "text" ),
     })
     return schema.validate(obj)
 }

@@ -3,6 +3,7 @@ const path = require('path');
 const asyncHandler=require("express-async-handler");
 const {Post,validateCreatePos,validateUpdatePost}=require("../models/Post");
 const {cloudinaryUploadImage, cloudinaryRemoveImage}=require("../utils/cloudinary");
+const {Comment}=require("../models/Comments")
 
 
 /**------------------------------------------
@@ -81,7 +82,7 @@ module.exports.getAllPostsCtrl=asyncHandler(async(req,res)=>{
 
 module.exports.getSinglePostsCtrl=asyncHandler(async(req,res)=>{
   
-    const post =await Post.findById(req.params.id).populate("user",["-password"]);
+    const post =await Post.findById(req.params.id).populate("user",["-password"]).populate("comments");
     if(!post){
         return res.status(404).json({message: "post not found"});
     }
@@ -127,7 +128,8 @@ module.exports.deletePostsCtrl=asyncHandler(async(req,res)=>{
       await Post.findByIdAndDelete(req.params.id);
       await cloudinaryRemoveImage(post.image.publicId);
 
-      //@TODO -Delete All comments that belong to this Post
+      //Delete All comments that belong to this Post
+      await Comment.deleteMany({postId:post._id})
       res.status(200).json({message:"post has been deleted successfully",postId:post._id})
     }else{
         res.status(403).json({message:"access denied Forbiden"})
