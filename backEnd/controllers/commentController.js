@@ -5,7 +5,7 @@ const {User}=require("../models/User")
 /**------------------------------------------
  *
  *   @desc    Create New Comment
- *   @route   POST /api/comments
+ *   @route    /api/comments
  *   @method Post
  *   @access Private (only logged in user)
 ----------------------------------------- */
